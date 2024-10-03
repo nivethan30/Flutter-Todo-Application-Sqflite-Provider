@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo_sqflite/database/table_structure.dart';
 import '../database/query.dart';
 import '../model/todo.dart';
 
@@ -10,12 +9,13 @@ class TodoProvider extends ChangeNotifier {
 
   List<Todo> get todos => _todos;
 
-  final TextEditingController todoIdController = TextEditingController();
-  final TextEditingController todoNameController = TextEditingController();
-  bool isDone = false;
-  final createdOn = DateTime.now();
-  final updatedOn = DateTime.now();
-
+  /// Gets all the todos from the database and updates the [_todos] list.
+  ///
+  /// Sets [isLoading] to true before the operation and false after the
+  /// operation. Calls [notifyListeners] after setting [isLoading] to inform
+  /// the widgets that depend on this provider to rebuild.
+  ///
+  /// If the operation fails, rethrows the error.
   Future<void> getTodo() async {
     try {
       isLoading = true;
@@ -29,12 +29,21 @@ class TodoProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> insertTodo() async {
+  /// Inserts a new Todo to the database and returns true if the operation is
+  /// successful or false if the operation fails.
+  ///
+  /// Creates a new [Todo] with the given [todoName], the current time as both
+  /// [createdOn] and [updatedOn], and [isDone] set to false.
+  ///
+  /// Calls [DatabaseQuery.createTodo] to insert the new Todo to the database.
+  ///
+  /// If the operation fails, rethrows the error.
+  Future<bool> insertTodo(String todoName) async {
     try {
       Todo addTodo = Todo(
-          todoName: todoNameController.text,
-          createdOn: createdOn.toIso8601String(),
-          updatedOn: updatedOn.toIso8601String(),
+          todoName: todoName,
+          createdOn: DateTime.now().toIso8601String(),
+          updatedOn: DateTime.now().toIso8601String(),
           isDone: 0);
       final resp = await _query.createTodo(addTodo);
       return resp;
@@ -43,21 +52,28 @@ class TodoProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> updateTodo() async {
+  /// Updates a Todo item in the database and returns true if the operation is
+  /// successful or false if the operation fails.
+  ///
+  /// Calls [DatabaseQuery.updateTodo] to update the Todo in the database.
+  ///
+  /// If the operation fails, rethrows the error.
+  Future<bool> updateTodo(Todo updatedTodo) async {
     try {
-      final int id = int.parse(todoIdController.text);
-      Map<String, dynamic> todo = {
-        TodoColumns.todoName: todoNameController.text,
-        TodoColumns.updatedOn: updatedOn.toIso8601String(),
-        TodoColumns.isDone: (isDone == false) ? 0 : 1,
-      };
-      final resp = await _query.updateTodo(id, todo);
+      final resp =
+          await _query.updateTodo(updatedTodo.todoId!, updatedTodo.toMap());
       return resp;
     } catch (e) {
       rethrow;
     }
   }
 
+  /// Deletes a Todo item from the database and returns true if the operation is
+  /// successful or false if the operation fails.
+  ///
+  /// Calls [DatabaseQuery.deleteTodo] to delete the Todo from the database.
+  ///
+  /// If the operation fails, rethrows the error.
   Future<bool> deleteTodo(int todoId) async {
     try {
       final resp = await _query.deleteTodo(todoId);

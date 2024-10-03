@@ -11,11 +11,19 @@ class Constants {
       TextStyle(fontFamily: 'Poppins', color: Colors.white);
 }
 
+/// A helper function to create a [TextStyle] with the Poppins font and light color (black).
+/// The [fontSize] parameter is required and sets the font size of the style.
+///
+/// Returns a [TextStyle] with the Poppins font, black color, and the given [fontSize].
 TextStyle poppinsLight(double fontSize) {
   return TextStyle(
       fontFamily: 'Poppins', color: Colors.black, fontSize: fontSize);
 }
 
+/// A helper function to create a [TextStyle] with the Poppins font and dark color (white).
+/// The [fontSize] parameter is required and sets the font size of the style.
+///
+/// Returns a [TextStyle] with the Poppins font, white color, and the given [fontSize].
 TextStyle poppinsDark(double fontSize) {
   return TextStyle(
       fontFamily: 'Poppins', color: Colors.white, fontSize: fontSize);

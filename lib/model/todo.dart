@@ -40,4 +40,20 @@ class Todo {
 
   factory Todo.fromJson(String source) =>
       Todo.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  Todo copyWith({
+    int? todoId,
+    String? todoName,
+    int? isDone,
+    String? createdOn,
+    String? updatedOn,
+  }) {
+    return Todo(
+      todoId: todoId ?? this.todoId,
+      todoName: todoName ?? this.todoName,
+      isDone: isDone ?? this.isDone,
+      createdOn: createdOn ?? this.createdOn,
+      updatedOn: updatedOn ?? this.updatedOn,
+    );
+  }
 }

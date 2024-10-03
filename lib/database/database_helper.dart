@@ -20,6 +20,16 @@ class DatabaseHelper {
     return _database!;
   }
 
+  /// Initialize the database.
+  //
+  /// Opens the database at the default location of the device's application
+  /// directory, using the name and version specified by the instance.
+  //
+  /// The [onCreate] callback is called when the database is created, and the
+  /// [onUpgrade] callback is called when the database is upgraded.
+  //
+  /// The function returns a [Future] of a [Database] object, which is the
+  /// handle to the database that can be used to execute SQL commands.
   Future<Database> _initDatabase() async {
     String dbPath = path.join(await getDatabasesPath(), dbName);
     return await openDatabase(dbPath,
