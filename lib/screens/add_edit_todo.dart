@@ -56,6 +56,7 @@ class AddEditTodo {
                   ),
                   const SizedBox(height: 16.0),
                   TextField(
+                      textCapitalization: TextCapitalization.sentences,
                       maxLength: 100,
                       controller: todoNameController,
                       style: themeProvider.themeData == AppTheme.light()
