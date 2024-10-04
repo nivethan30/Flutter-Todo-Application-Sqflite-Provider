@@ -20,19 +20,32 @@ class TileWidget extends StatelessWidget {
       required this.editTodo});
 
   @override
-  /// Builds a [GestureDetector] widget that shows a bottom sheet to edit the
-  /// Todo item when tapped. The Todo item is displayed in a [Row] widget with
-  /// a [CircleAvatar] that shows the status of the Todo (unchecked or checked),
-  /// the name of the Todo, and an [IconButton] to delete the Todo.
+
+
+
+  /// Builds a single tile of the todo list.
   ///
-  /// The [CircleAvatar] is used to toggle the status of the Todo when tapped.
+  /// The [GestureDetector] is used to make the tile clickable. When the tile is
+  /// tapped, a bottom sheet is shown to edit the todo.
   ///
-  /// The [IconButton] is used to delete the Todo when pressed.
+  /// The [Container] is used to create a rectangular shape with a rounded
+  /// corner. The color of the container is either light grey or dark purple
+  /// depending on the current theme of the app.
   ///
-  /// The [Container] is used to display the background color of the Todo item.
-  /// The background color is determined by the current theme of the app.
+  /// The [Row] is used to align the [CircleAvatar], [Text], and [IconButton]
+  /// horizontally.
   ///
-  /// Returns a [Widget] that represents the Todo item.
+  /// The [CircleAvatar] is used to display the checkbox icon. The color of the
+  /// icon is black. The icon is either an outline or filled checkbox depending on
+  /// the [isDone] property of the [Todo] object.
+  ///
+  /// The [Text] is used to display the name of the todo. The style of the text
+  /// depends on the current theme of the app. The text is ellipsized and
+  /// truncated to one line.
+  ///
+  /// The [IconButton] is used to delete the todo. The icon of the button is a
+  /// delete icon. When the button is pressed, the [deleteTodo] callback is called.
+  
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
@@ -73,13 +86,18 @@ class TileWidget extends StatelessWidget {
                           )),
               ),
             ),
-            Text(
-              todo.todoName.toString(),
-              style: themeProvider.themeData == AppTheme.light()
-                  ? Constants.poppinsNormalLight.copyWith(fontSize: 15)
-                  : Constants.poppinsNormalDark.copyWith(fontSize: 15),
+            Expanded(
+              flex: 5,
+              child: Text(
+                todo.todoName.toString(),
+                style: themeProvider.themeData == AppTheme.light()
+                    ? Constants.poppinsNormalLight.copyWith(fontSize: 15)
+                    : Constants.poppinsNormalDark.copyWith(fontSize: 15),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
             ),
-            Expanded(child: SizedBox()),
+            Expanded(flex: 1, child: SizedBox()),
             IconButton(onPressed: deleteTodo, icon: Icon(Icons.delete))
           ],
         ),
