@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/theme_provider.dart';
-import 'screens/main_screen/todo_main.dart';
+import 'screens/splash_screen.dart';
 import 'utils/constants.dart';
 import 'providers/todo_provider.dart';
 
@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
   /// * [debugShowCheckedModeBanner] is set to `false`.
   /// * [title] is set to [Constants.appTitle].
   /// * [theme] is set to the current theme of the [ThemeProvider].
-  /// * [home] is set to an instance of [TodoMain].
+  /// * [home] is set to an instance of [SplashScreen].
   ///
   Widget build(BuildContext context) {
     final themeProvider = context.watch<ThemeProvider>();
@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: Constants.appTitle,
       theme: themeProvider.themeData,
-      home: const TodoMain(),
+      home: const SplashScreen(),
     );
   }
 }

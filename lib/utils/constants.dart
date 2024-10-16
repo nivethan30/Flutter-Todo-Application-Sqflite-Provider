@@ -28,3 +28,7 @@ TextStyle poppinsDark(double fontSize) {
   return TextStyle(
       fontFamily: 'Poppins', color: Colors.white, fontSize: fontSize);
 }
+
+class Assets {
+  static const String taskImage = "assets/images/tasks.png";
+}
